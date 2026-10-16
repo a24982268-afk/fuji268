@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>蹦火仔 預約詢問</title>
-<meta name="description" content="2026 金山蹦火仔遊程：陸上漁村導覽、海上蹦火導覽、海陸雙響蹦。線上填寫預約詢問，複製後傳到 LINE 或臉書私訊。">
+<meta name="description" content="2026 金山蹦火仔遊程：陸上漁村導覽、海上蹦火導覽、海陸雙響蹦。線上填寫預約詢問，一鍵用 LINE 傳送，或複製到臉書私訊。">
 <meta property="og:title" content="2026 金山蹦火仔遊程｜預約詢問">
 <meta property="og:description" content="陸上漁村導覽、海上蹦火導覽、海陸雙響蹦。線上填寫預約詢問，我們會盡快回覆確認。">
 <meta property="og:type" content="website">
@@ -74,6 +74,11 @@ input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-vis
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 .bar>div{max-width:560px;margin:0 auto;display:flex;gap:10px;align-items:center}
 .copy{flex:1;font:inherit;font-weight:900;font-size:17px;padding:14px;border-radius:12px;border:0;background:var(--ember);color:var(--ember-fg);cursor:pointer}
+.copy.line{text-align:center;text-decoration:none;white-space:nowrap}
+.bar>div{flex-wrap:wrap}
+.bar .status{flex-basis:100%;text-align:center}
+.bar .status:empty{display:none}
+.copy2{font:inherit;font-weight:700;font-size:15px;padding:13px 14px;border-radius:12px;border:1.5px solid var(--line);background:transparent;color:var(--fg);cursor:pointer;white-space:nowrap}
 .status{font-size:13px;color:var(--muted);min-width:0}
 [hidden]{display:none!important}
 </style>
@@ -84,7 +89,7 @@ input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-vis
   <header>
     <span class="tag">金山 · 磺港 · 富吉 268 號</span>
     <h1>2026 金山蹦火仔遊程</h1>
-    <p class="lead">看完遊程後，在下方填寫預約詢問，複製內容貼到我們的 LINE 或臉書私訊，我們會盡快回覆確認。</p>
+    <p class="lead">看完遊程後，在下方填寫預約詢問，按「用 LINE 傳送」直接傳給我們；用臉書的話請按「複製」後貼到私訊。我們會盡快回覆確認。</p>
   </header>
 
   <p class="notice">海上類遊程為季節限定，2026 年活動期間為 5/9（六）至 9/27（日）。陸上漁村導覽全年皆有。</p>
@@ -239,7 +244,8 @@ input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-vis
 </div>
 
 <div class="bar"><div>
-  <button class="copy" id="copy" type="button">複製預約內容</button>
+  <a class="copy line" id="lineSend" href="https://line.me/R/oaMessage/@FUJI268/">用 LINE 傳送</a>
+  <button class="copy2" id="copy" type="button">複製</button>
   <span class="status" id="st" role="status"></span>
 </div></div>
 
@@ -288,7 +294,9 @@ input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-vis
     var e=estimate(),tot=num("n1")+num("n2")+num("n3");
     $("est").hidden=!(e!=null&&tot>0);
     if(!$("est").hidden)$("est").textContent="預估費用 "+money(e);
-    $("pv").textContent=build();
+    var txt=build();
+    $("pv").textContent=txt;
+    $("lineSend").href="https://line.me/R/oaMessage/@FUJI268/?"+encodeURIComponent(txt);
   }
   document.querySelectorAll(".seg button").forEach(function(b){b.addEventListener("click",function(){type=b.dataset.t;render()})});
   document.querySelectorAll("input,select,textarea").forEach(function(e){e.addEventListener("input",render);e.addEventListener("change",render)});
