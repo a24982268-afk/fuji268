@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>蹦火仔 預約詢問</title>
+<meta name="description" content="2026 金山蹦火仔遊程：陸上漁村導覽、海上蹦火導覽、海陸雙響蹦。線上填寫預約詢問，複製後傳到 LINE 或臉書私訊。">
+<meta property="og:title" content="2026 金山蹦火仔遊程｜預約詢問">
+<meta property="og:description" content="陸上漁村導覽、海上蹦火導覽、海陸雙響蹦。線上填寫預約詢問，我們會盡快回覆確認。">
+<meta property="og:type" content="website">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+img{max-width:100%}
+/* Layout: single narrow column, phone first. Tour cards with prices first, then the inquiry form, FAQ, contact. Sticky copy bar at bottom. */
+:root{
+  color-scheme:light;
+  --bg:#eef0f2; --surface:#ffffff; --fg:#1b1e22; --muted:#5d6670; --line:#d3d8dd;
+  --ember:#c2410c; --ember-fg:#ffffff; --ember-soft:#fde7dc; --sea:#1d5fa8; --sea-soft:#dce9f8; --warn:#9a6700; --warn-soft:#fbefc8;
+  --font:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#15171a; --surface:#1f2226; --fg:#eceff2; --muted:#9aa4ae; --line:#363b41;
+  --ember:#ff8a4c; --ember-fg:#1a0d05; --ember-soft:#3a2216; --sea:#7db6f2; --sea-soft:#17304d; --warn:#f0c75e; --warn-soft:#3b3012; color-scheme:dark;}}
+:root[data-theme="dark"]{
+  --bg:#15171a; --surface:#1f2226; --fg:#eceff2; --muted:#9aa4ae; --line:#363b41;
+  --ember:#ff8a4c; --ember-fg:#1a0d05; --ember-soft:#3a2216; --sea:#7db6f2; --sea-soft:#17304d; --warn:#f0c75e; --warn-soft:#3b3012; color-scheme:dark;}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--font);font-size:16px;line-height:1.6;margin:0;
+  padding-block:24px 112px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:560px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+h1{font-size:28px;font-weight:900;line-height:1.25;margin:0;text-wrap:balance}
+.lead{color:var(--muted);margin:6px 0 0}
+.tag{display:inline-block;font-size:12px;letter-spacing:.14em;font-weight:700;color:var(--ember);margin-bottom:6px}
+h2{font-size:15px;margin:0;letter-spacing:.06em;color:var(--muted);font-weight:700}
+.notice{background:var(--warn-soft);color:var(--fg);border-radius:10px;padding:10px 12px;font-size:14px;margin:0}
+.tour{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:12px}
+.tour h3{margin:0;font-size:20px;font-weight:900}
+.tour .badges{display:flex;flex-wrap:wrap;gap:6px}
+.badge{font-size:12px;font-weight:700;padding:2px 9px;border-radius:999px;background:var(--ember-soft);color:var(--ember)}
+.badge.sea{background:var(--sea-soft);color:var(--sea)}
+.tour ul{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:2px}
+.tour ul ul{margin-top:2px}
+.prices{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.prices div{background:var(--bg);border-radius:10px;padding:8px 6px;text-align:center;min-width:0}
+.prices small{display:block;color:var(--muted);font-size:12px}
+.prices b{font-variant-numeric:tabular-nums;font-size:16px}
+details.sched summary{cursor:pointer;font-weight:700;font-size:14px;color:var(--ember)}
+details.sched ol{margin:8px 0 0;padding-left:0;list-style:none;display:flex;flex-direction:column;gap:2px;font-size:14px;color:var(--muted)}
+details.sched ol b{font-variant-numeric:tabular-nums;color:var(--fg);font-weight:500;margin-right:8px}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.seg button{font:inherit;font-weight:700;padding:12px 6px;border-radius:10px;border:1.5px solid var(--line);background:var(--surface);color:var(--fg);cursor:pointer;min-width:0}
+.seg button[aria-pressed="true"]{background:var(--ember);border-color:var(--ember);color:var(--ember-fg)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:14px}
+label{display:flex;flex-direction:column;gap:6px;font-weight:500;font-size:14px;min-width:0}
+input,select,textarea{font:inherit;font-size:16px;padding:11px 12px;border-radius:9px;border:1.5px solid var(--line);background:var(--bg);color:var(--fg);width:100%;min-width:0}
+textarea{min-height:84px;resize:vertical}
+input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-visible,summary:focus-visible,a:focus-visible{outline:3px solid var(--ember);outline-offset:2px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.row3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+@media(max-width:380px){.row{grid-template-columns:1fr}}
+.hint{font-size:13px;color:var(--muted);margin:0}
+.est{font-weight:900;font-size:20px;font-variant-numeric:tabular-nums;margin:0}
+.preview{white-space:pre-wrap;word-break:break-word;background:var(--ember-soft);border-radius:10px;padding:14px;font-size:15px;line-height:1.7;margin:0;font-family:var(--font)}
+.faq details{border-top:1px solid var(--line);padding:12px 0}
+.faq details:first-of-type{border-top:0}
+.faq summary{cursor:pointer;font-weight:700}
+.faq p{margin:8px 0 0;color:var(--muted);font-size:15px}
+.contact{display:flex;flex-direction:column;gap:8px;font-size:15px}
+.contact a{color:var(--ember);font-weight:700}
+.bar{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:1px solid var(--line);
+  padding-top:12px;padding-bottom:calc(12px + env(safe-area-inset-bottom,0px));
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.bar>div{max-width:560px;margin:0 auto;display:flex;gap:10px;align-items:center}
+.copy{flex:1;font:inherit;font-weight:900;font-size:17px;padding:14px;border-radius:12px;border:0;background:var(--ember);color:var(--ember-fg);cursor:pointer}
+.status{font-size:13px;color:var(--muted);min-width:0}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <span class="tag">金山 · 磺港 · 富吉 268 號</span>
+    <h1>2026 金山蹦火仔遊程</h1>
+    <p class="lead">看完遊程後，在下方填寫預約詢問，複製內容貼到我們的 LINE 或臉書私訊，我們會盡快回覆確認。</p>
+  </header>
+
+  <p class="notice">海上類遊程為季節限定，2026 年活動期間為 5/9（六）至 9/27（日）。陸上漁村導覽全年皆有。</p>
+
+  <section style="display:flex;flex-direction:column;gap:14px" aria-label="遊程介紹">
+    <h2>三種遊程</h2>
+    <div class="tour">
+      <div class="badges"><span class="badge">全年皆有</span><span class="badge">約 2.5 小時</span></div>
+      <h3>陸上漁村導覽</h3>
+      <ul>
+        <li>磺港魚路古道導覽</li>
+        <li>漁村日常生活
+          <ul><li>曬魚乾體驗</li><li>挑魚人文體驗</li></ul></li>
+        <li>獨家火長點火體驗</li>
+        <li>百年蹦火漁法解說</li>
+        <li>磺港承天宮祈福儀式</li>
+        <li>討海人的漁夫餐，小卷米粉</li>
+      </ul>
+      <div class="prices"><div><small>全票</small><b>$650</b></div><div><small>7–12 歲</small><b>$500</b></div><div><small>6 歲以下</small><b>$350</b></div></div>
+      <details class="sched"><summary>時間表參考</summary><ol>
+        <li><b>14:20</b>報到集合（煮飯間）</li><li><b>14:30</b>遊程開始</li>
+        <li><b>14:30–15:15</b>百年蹦火漁法解說、曬魚乾體驗</li><li><b>15:15–15:25</b>小憩片刻</li>
+        <li><b>15:25–16:05</b>漁活，火長點火體驗</li><li><b>16:05–16:15</b>小憩片刻</li>
+        <li><b>16:15–17:00</b>磺港漁村導覽、挑魚人文體驗</li><li><b>17:00</b>漁夫晚餐與賦歸</li></ol></details>
+    </div>
+
+    <div class="tour">
+      <div class="badges"><span class="badge sea">季節限定</span><span class="badge">約 4.5 小時</span></div>
+      <h3>海上蹦火導覽</h3>
+      <ul>
+        <li>百年蹦火漁法解說</li>
+        <li>討海人的漁夫餐，小卷米粉</li>
+        <li>北海岸海景觀賞兜風</li>
+        <li>海釣體驗</li>
+        <li>希望漁火，蹦火仔觀賞</li>
+      </ul>
+      <div class="prices"><div><small>全票</small><b>$1,800</b></div><div><small>7–12 歲</small><b>$1,400</b></div><div><small>6 歲以下</small><b>$900</b></div></div>
+      <details class="sched"><summary>時間表參考</summary><ol>
+        <li><b>16:20</b>集合（煮飯間）</li><li><b>16:30</b>遊程開始</li>
+        <li><b>16:30–17:15</b>百年蹦火漁法解說</li><li><b>17:15–17:50</b>漁夫晚餐、登船準備</li>
+        <li><b>17:50–18:15</b>出港、海景觀賞</li><li><b>18:15–19:00</b>海釣體驗</li>
+        <li><b>19:00–19:20</b>收竿，前往欣賞蹦火</li><li><b>19:30–20:30</b>希望漁火，蹦火仔表演秀</li>
+        <li><b>20:30</b>回港、賦歸</li></ol></details>
+    </div>
+
+    <div class="tour">
+      <div class="badges"><span class="badge sea">季節限定</span><span class="badge">約 6.5 小時</span></div>
+      <h3>海陸雙響蹦</h3>
+      <ul>
+        <li>磺港漁村導覽，魚路古道</li>
+        <li>漁村日常生活</li>
+        <li>獨家火長點火體驗</li>
+        <li>百年蹦火漁法解說</li>
+        <li>磺港承天宮祈福儀式</li>
+        <li>討海人的漁夫餐，小卷米粉</li>
+        <li>北海岸海景觀賞兜風</li>
+        <li>海釣體驗</li>
+        <li>希望漁火，蹦火仔觀賞</li>
+      </ul>
+      <div class="prices"><div><small>全票</small><b>$2,300</b></div><div><small>7–12 歲</small><b>$1,800</b></div><div><small>6 歲以下</small><b>$1,150</b></div></div>
+      <details class="sched"><summary>時間表參考</summary><ol>
+        <li><b>14:20</b>集合（煮飯間）</li><li><b>14:30</b>遊程開始</li>
+        <li><b>14:30–15:15</b>百年蹦火漁法解說、曬魚乾體驗</li><li><b>15:15–15:25</b>小憩片刻</li>
+        <li><b>15:25–16:05</b>漁活，火長點火體驗</li><li><b>16:05–16:15</b>小憩片刻</li>
+        <li><b>16:15–17:00</b>磺港漁村導覽、挑魚人文體驗</li><li><b>17:00–17:10</b>小憩片刻</li>
+        <li><b>17:10–17:50</b>漁夫晚餐、登船準備</li><li><b>17:50–18:15</b>出港、海景觀賞</li>
+        <li><b>18:15–19:00</b>海釣體驗</li><li><b>19:00–19:20</b>收竿，前往欣賞蹦火</li>
+        <li><b>19:30–20:30</b>希望漁火，蹦火仔表演秀</li><li><b>20:30</b>回港、賦歸</li></ol></details>
+    </div>
+    <p class="hint">為了安全，本公司保有依情況調整行程的權利與義務。以上價格每人計算，平日皆可包團，詳情請洽詢。</p>
+  </section>
+
+  <section style="display:flex;flex-direction:column;gap:14px" aria-label="預約詢問">
+    <h2>預約詢問</h2>
+    <div class="seg" role="group" aria-label="預約類型">
+      <button type="button" data-t="散客" aria-pressed="true">散客</button>
+      <button type="button" data-t="學校" aria-pressed="false">學校</button>
+      <button type="button" data-t="公司團體" aria-pressed="false">公司團體</button>
+    </div>
+
+    <form class="card" id="f" autocomplete="off">
+      <div data-for="學校" hidden><label>學校名稱<input id="school" placeholder="例：○○國小"></label></div>
+      <div data-for="公司團體" hidden><label>公司／團體名稱<input id="company" placeholder="例：○○股份有限公司"></label></div>
+      <div class="row">
+        <label>聯絡人<input id="name" placeholder="姓名"></label>
+        <label>手機<input id="phone" inputmode="tel" placeholder="09xx-xxx-xxx"></label>
+      </div>
+      <label>LINE 名稱或 ID（選填）<input id="line"></label>
+    </form>
+
+    <form class="card" id="g" autocomplete="off">
+      <label>想參加的遊程
+        <select id="tour">
+          <option value="">還沒決定，想請你們建議</option>
+          <option value="land">陸上漁村導覽</option>
+          <option value="sea">海上蹦火導覽</option>
+          <option value="combo">海陸雙響蹦</option>
+          <option value="custom">公司客製行程</option>
+        </select>
+      </label>
+      <div class="row">
+        <label>首選日期<input id="d1" type="date"></label>
+        <label>備案日期<input id="d2" type="date"></label>
+      </div>
+      <p class="hint" id="seasonHint" hidden>海上類遊程 2026 年活動期間為 5/9 至 9/27，此日期不在期間內。仍可送出詢問，我們會再與您確認。</p>
+      <div class="row3">
+        <label>全票<input id="n1" type="number" min="0" inputmode="numeric" placeholder="人"></label>
+        <label>7–12 歲<input id="n2" type="number" min="0" inputmode="numeric" placeholder="人"></label>
+        <label>6 歲以下<input id="n3" type="number" min="0" inputmode="numeric" placeholder="人"></label>
+      </div>
+      <p class="est" id="est" hidden></p>
+      <div data-for="學校" hidden>
+        <div class="row">
+          <label>年級／班級<input id="grade" placeholder="例：三年級 4 班"></label>
+          <label>帶隊老師人數<input id="teachers" type="number" min="0" inputmode="numeric"></label>
+        </div>
+      </div>
+      <label>交通方式
+        <select id="trans"><option value="">未定</option><option>自行開車</option><option>遊覽車</option><option>大眾運輸</option></select>
+      </label>
+      <label>飲食禁忌（漁夫餐為小卷米粉）<input id="meal" placeholder="例：素食 3 份、花生過敏 1 位"></label>
+      <div data-for="學校,公司團體" hidden>
+        <label>單據需求<select id="doc"><option value="">未定</option><option>收據</option><option>發票（需統編）</option><option>公文／請款單</option><option>不需要</option></select></label>
+      </div>
+      <label>其他備註<textarea id="note" placeholder="特殊需求、行動不便、年長者等"></textarea></label>
+    </form>
+
+    <div class="card">
+      <h2>要傳給我們的內容</h2>
+      <pre class="preview" id="pv"></pre>
+      <p class="hint">內容會隨填寫自動更新。預估費用依海報價格計算，實際以我們回覆確認為準。</p>
+    </div>
+  </section>
+
+  <section class="card faq" aria-label="常見問題">
+    <h2>常見問題</h2>
+    <details><summary>集合地點在哪裡？</summary><p>在煮飯間集合。陸上與海陸遊程 14:20 集合，海上遊程 16:20 集合。</p></details>
+    <details><summary>遊程大約多久？</summary><p>陸上約 2.5 小時，海上約 4.5 小時，海陸雙響蹦約 6.5 小時。</p></details>
+    <details><summary>哪些遊程一年四季都有？</summary><p>陸上漁村導覽全年皆有。海上蹦火導覽與海陸雙響蹦為季節限定，2026 年期間是 5/9 至 9/27。</p></details>
+    <details><summary>小孩怎麼收費？</summary><p>分三種：全票、7 至 12 歲、6 歲以下，價格見上方各遊程。</p></details>
+    <details><summary>可以包團嗎？</summary><p>平日皆可包團，請在詢問時填寫日期與人數，我們會回覆。</p></details>
+    <details><summary>天氣或海況不好怎麼辦？</summary><p>為了安全，本公司保有依情況調整行程的權利與義務。實際安排會在確認時與您說明。</p></details>
+  </section>
+
+  <section class="card contact" aria-label="聯絡我們">
+    <h2>聯絡我們</h2>
+    <span>富吉漁創有限公司</span>
+    <span>電話：<b>0955-058-522</b></span>
+    <span>LINE：<b>@FUJI268</b>　<a href="https://line.me/R/ti/p/@FUJI268">加入 LINE</a></span>
+    <span><a href="https://www.facebook.com/fuji268">蹦火漁業合作社，富吉 268 號（臉書粉專）</a></span>
+  </section>
+</div>
+
+<div class="bar"><div>
+  <button class="copy" id="copy" type="button">複製預約內容</button>
+  <span class="status" id="st" role="status"></span>
+</div></div>
+
+<script>
+(function(){
+  var type="散客";
+  var TOURS={land:{n:"陸上漁村導覽",p:[650,500,350]},sea:{n:"海上蹦火導覽",p:[1800,1400,900],season:1},combo:{n:"海陸雙響蹦",p:[2300,1800,1150],season:1},custom:{n:"公司客製行程"}};
+  var $=function(id){return document.getElementById(id)};
+  function v(id){var e=$(id);return e&&e.value?e.value.trim():""}
+  function num(id){return +v(id)||0}
+  function fmt(d){if(!d)return"";var p=d.split("-");var dt=new Date(+p[0],+p[1]-1,+p[2]);var w="日一二三四五六"[dt.getDay()];return p[0]+"/"+p[1]+"/"+p[2]+"（"+w+"）"}
+  function money(n){return "$"+n.toLocaleString("en-US")}
+  function estimate(){
+    var t=TOURS[v("tour")];if(!t||!t.p)return null;
+    return num("n1")*t.p[0]+num("n2")*t.p[1]+num("n3")*t.p[2];
+  }
+  function inSeason(d){return d>="2026-05-09"&&d<="2026-09-27"}
+  function build(){
+    var t=TOURS[v("tour")];
+    var L=["【蹦火仔 預約詢問】","類型："+type];
+    if(type==="學校"&&v("school"))L.push("學校："+v("school"));
+    if(type==="公司團體"&&v("company"))L.push("單位："+v("company"));
+    L.push("聯絡人："+(v("name")||"（未填）"));
+    L.push("手機："+(v("phone")||"（未填）"));
+    if(v("line"))L.push("LINE："+v("line"));
+    L.push("遊程："+(t?t.n:"尚未決定，請建議"));
+    L.push("首選日期："+(fmt(v("d1"))||"（未填）"));
+    if(v("d2"))L.push("備案日期："+fmt(v("d2")));
+    var a=num("n1"),b=num("n2"),c=num("n3");
+    L.push("人數：全票 "+a+" 位、7–12 歲 "+b+" 位、6 歲以下 "+c+" 位，共 "+(a+b+c)+" 位");
+    var e=estimate();if(e!=null&&(a+b+c)>0)L.push("預估費用：$"+e.toLocaleString("en-US"));
+    if(type==="學校"){if(v("grade"))L.push("年級／班級："+v("grade"));if(v("teachers"))L.push("帶隊老師："+v("teachers")+" 位（已含在全票人數）")}
+    if(v("trans"))L.push("交通："+v("trans"));
+    if(v("meal"))L.push("用餐："+v("meal"));
+    if(type!=="散客"&&v("doc"))L.push("單據："+v("doc"));
+    if(v("note"))L.push("備註："+v("note"));
+    return L.join("\n");
+  }
+  function render(){
+    document.querySelectorAll("[data-for]").forEach(function(el){
+      el.hidden=el.getAttribute("data-for").split(",").indexOf(type)<0;
+    });
+    document.querySelectorAll(".seg button").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.t===type?"true":"false")});
+    var t=TOURS[v("tour")],d=v("d1");
+    $("seasonHint").hidden=!(t&&t.season&&d&&!inSeason(d));
+    var e=estimate(),tot=num("n1")+num("n2")+num("n3");
+    $("est").hidden=!(e!=null&&tot>0);
+    if(!$("est").hidden)$("est").textContent="預估費用 "+money(e);
+    $("pv").textContent=build();
+  }
+  document.querySelectorAll(".seg button").forEach(function(b){b.addEventListener("click",function(){type=b.dataset.t;render()})});
+  document.querySelectorAll("input,select,textarea").forEach(function(e){e.addEventListener("input",render);e.addEventListener("change",render)});
+  document.querySelectorAll("form").forEach(function(f){f.addEventListener("submit",function(e){e.preventDefault()})});
+  $("copy").addEventListener("click",function(){
+    var txt=build(),st=$("st");
+    function fallback(){
+      var r=document.createRange();r.selectNodeContents($("pv"));var s=getSelection();s.removeAllRanges();s.addRange(r);
+      st.textContent="請長按選取後複製";
+    }
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      navigator.clipboard.writeText(txt).then(function(){st.textContent="已複製，請貼到 LINE 或臉書私訊"},fallback);
+    }else fallback();
+  });
+  render();
+})();
+</script>
+
+</body>
+</html>
