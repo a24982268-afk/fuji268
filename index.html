@@ -61,6 +61,9 @@ input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-vis
 .row3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
 @media(max-width:380px){.row{grid-template-columns:1fr}}
 .hint{font-size:13px;color:var(--muted);margin:0}
+.hint.avail{font-weight:700;padding:6px 10px;border-radius:8px;background:var(--sea-soft);color:var(--sea)}
+.hint.avail[data-s="few"],.hint.avail[data-s="none"]{background:var(--warn-soft);color:var(--warn)}
+.hint.avail[data-s="full"],.hint.avail[data-s="stop"]{background:var(--ember-soft);color:var(--ember)}
 .est{font-weight:900;font-size:20px;font-variant-numeric:tabular-nums;margin:0}
 .preview{white-space:pre-wrap;word-break:break-word;background:var(--ember-soft);border-radius:10px;padding:14px;font-size:15px;line-height:1.7;margin:0;font-family:var(--font)}
 .faq details{border-top:1px solid var(--line);padding:12px 0}
@@ -194,6 +197,7 @@ input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-vis
         <label>首選日期<input id="d1" type="date"></label>
         <label>備案日期<input id="d2" type="date"></label>
       </div>
+      <p class="hint avail" id="availHint" role="status" hidden></p>
       <p class="hint" id="seasonHint" hidden>海上類遊程 2026 年活動期間為 5/9 至 9/27，此日期不在期間內。仍可送出詢問，我們會再與您確認。</p>
       <div class="row3">
         <label>全票<input id="n1" type="number" min="0" inputmode="numeric" placeholder="人"></label>
@@ -262,6 +266,12 @@ input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-vis
     var t=TOURS[v("tour")];if(!t||!t.p)return null;
     return num("n1")*t.p[0]+num("n2")*t.p[1]+num("n3")*t.p[2];
   }
+  // 名額狀態來自接團台後端（只有「有沒有位子」，不含船名與人數）
+  var AVAIL_URL="https://script.google.com/macros/s/AKfycbyl_kkWtZAvfw4dfnO-rv9SlXLQDa8OelToqGNMlwAqdQ68OTNmv1eZiBdV0DMscAUW4Q/exec?avail=1";
+  var avail=null;
+  var AVAIL_TXT={open:"尚有名額",few:"名額有限，請盡快詢問",full:"這天已額滿，建議改其他日期，或填寫備案日期",stop:"這天船班暫停，請改其他日期",none:"這天尚未安排船班，送出後我們會再與您確認"};
+  fetch(AVAIL_URL,{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(j&&j.days){avail=j.days;render()}}).catch(function(){});
+  function availOf(d){if(!avail||!d)return null;return avail[d]||"none"}
   function inSeason(d){return d>="2026-05-09"&&d<="2026-09-27"}
   function build(){
     var t=TOURS[v("tour")];
@@ -291,6 +301,8 @@ input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-vis
     document.querySelectorAll(".seg button").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.t===type?"true":"false")});
     var t=TOURS[v("tour")],d=v("d1");
     $("seasonHint").hidden=!(t&&t.season&&d&&!inSeason(d));
+    var av=t&&t.season&&d&&inSeason(d)?availOf(d):null,ah=$("availHint");
+    ah.hidden=!av;if(av){ah.textContent=AVAIL_TXT[av];ah.dataset.s=av}
     var e=estimate(),tot=num("n1")+num("n2")+num("n3");
     $("est").hidden=!(e!=null&&tot>0);
     if(!$("est").hidden)$("est").textContent="預估費用 "+money(e);
