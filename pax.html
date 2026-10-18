@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="referrer" content="no-referrer">
+<title>蹦火仔 旅客名單</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap">
+<style>
+/* Layout: one narrow column. Trip summary, then one card per traveller, sticky submit bar. Link carries a per-booking key. */
+:root{
+  color-scheme:light;
+  --bg:#eef0f2; --surface:#ffffff; --fg:#1b1e22; --muted:#5d6670; --line:#d3d8dd;
+  --ember:#c2410c; --ember-fg:#ffffff; --ember-soft:#fde7dc; --sea:#1d5fa8; --sea-soft:#dce9f8; --warn:#9a6700; --warn-soft:#fbefc8; --bad:#b42318; --ok:#17803d; --ok-soft:#dcf3e3;
+  --font:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#15171a; --surface:#1f2226; --fg:#eceff2; --muted:#9aa4ae; --line:#363b41;
+  --ember:#ff8a4c; --ember-fg:#1a0d05; --ember-soft:#3a2216; --sea:#7db6f2; --sea-soft:#17304d; --warn:#f0c75e; --warn-soft:#3b3012; --bad:#ff8f84; --ok:#5fd68a; --ok-soft:#173824; color-scheme:dark;}}
+:root[data-theme="dark"]{
+  --bg:#15171a; --surface:#1f2226; --fg:#eceff2; --muted:#9aa4ae; --line:#363b41;
+  --ember:#ff8a4c; --ember-fg:#1a0d05; --ember-soft:#3a2216; --sea:#7db6f2; --sea-soft:#17304d; --warn:#f0c75e; --warn-soft:#3b3012; --bad:#ff8f84; --ok:#5fd68a; --ok-soft:#173824; color-scheme:dark;}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--font);font-size:16px;line-height:1.6;margin:0;
+  padding-top:max(24px,env(safe-area-inset-top,0px));padding-bottom:max(120px,env(safe-area-inset-bottom,0px));
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:560px;margin:0 auto;display:flex;flex-direction:column;gap:16px}
+h1{font-size:26px;font-weight:900;line-height:1.25;margin:0}
+.tag{display:inline-block;font-size:12px;letter-spacing:.14em;font-weight:700;color:var(--ember);margin-bottom:4px}
+.lead{color:var(--muted);margin:6px 0 0;font-size:15px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:10px}
+.sum{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;margin:0;font-size:15px}
+.sum dt{color:var(--muted)}.sum dd{margin:0;font-weight:700}
+.p h2{font-size:15px;margin:0;font-weight:700;display:flex;justify-content:space-between;align-items:center}
+label{display:flex;flex-direction:column;gap:4px;font-size:14px;font-weight:500;min-width:0}
+input{font:inherit;font-size:16px;padding:10px 11px;border-radius:9px;border:1.5px solid var(--line);background:var(--bg);color:var(--fg);width:100%;min-width:0}
+input:focus-visible,button:focus-visible{outline:3px solid var(--ember);outline-offset:2px}
+input[aria-invalid="true"]{border-color:var(--bad)}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:400px){.row{grid-template-columns:1fr}}
+.err{color:var(--bad);font-size:13px;margin:0}
+.hint{color:var(--muted);font-size:13px;margin:0}
+.notice{border-radius:10px;padding:12px 14px;margin:0;font-size:15px}
+.notice.ok{background:var(--ok-soft);color:var(--ok);font-weight:700}
+.notice.bad{background:var(--warn-soft);color:var(--fg)}
+.ghost{font:inherit;font-size:14px;font-weight:500;background:transparent;color:var(--fg);border:1.5px solid var(--line);border-radius:9px;padding:7px 12px;cursor:pointer}
+.ghost.small{padding:3px 10px;font-size:13px;color:var(--muted)}
+.bar{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:1px solid var(--line);
+  padding:12px max(16px,env(safe-area-inset-right,0px)) max(12px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.bar>div{max-width:560px;margin:0 auto;display:flex;flex-direction:column;gap:6px}
+.send{font:inherit;font-weight:900;font-size:17px;padding:14px;border-radius:12px;border:0;background:var(--ember);color:var(--ember-fg);cursor:pointer;width:100%}
+.send:disabled{opacity:.55;cursor:default}
+.status{font-size:13px;color:var(--muted);text-align:center;min-height:1em}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div>
+    <span class="tag">金山蹦火仔</span>
+    <h1>旅客名單</h1>
+    <p class="lead">出海前要製作船班旅客名冊，請填寫每一位參加者的資料。資料只用於這次行程的名冊。</p>
+  </div>
+  <p class="notice bad" id="msg" hidden></p>
+  <div class="card" id="sumCard" hidden><dl class="sum" id="sum"></dl></div>
+  <div id="list" style="display:flex;flex-direction:column;gap:12px"></div>
+  <button class="ghost" type="button" id="addBtn" hidden>＋ 再加一位</button>
+  <p class="notice ok" id="done" hidden></p>
+</div>
+<div class="bar" id="bar" hidden><div>
+  <button class="send" id="send" type="button">送出名單</button>
+  <span class="status" id="st" role="status"></span>
+</div></div>
+<script>
+(function(){
+  var API="https://script.google.com/macros/s/AKfycbyl_kkWtZAvfw4dfnO-rv9SlXLQDa8OelToqGNMlwAqdQ68OTNmv1eZiBdV0DMscAUW4Q/exec";
+  var q=new URLSearchParams(location.search),bid=q.get("b")||"",key=q.get("k")||"";
+  var $=function(id){return document.getElementById(id)};
+  function el(tag,cls,text){var e=document.createElement(tag);if(cls)e.className=cls;if(text!=null)e.textContent=text;return e}
+  var rows=[],need=0;
+  function stop(t){$("msg").textContent=t;$("msg").hidden=false;$("bar").hidden=true;$("addBtn").hidden=true}
+
+  var TWID="ABCDEFGHJKLMNPQRSTUVXYWZIO";
+  function idErr(s){
+    s=s.trim().toUpperCase();if(!s)return "";
+    if(/^[A-Z][1289]\d{8}$/.test(s)){
+      var n=TWID.indexOf(s[0])+10,sum=Math.floor(n/10)+(n%10)*9;
+      for(var i=1;i<9;i++)sum+=(+s[i])*(9-i);
+      return (sum+(+s[9]))%10===0?"":"身分證字號好像打錯了，請再確認一次";
+    }
+    if(/^[A-Z]\d/.test(s)&&s.length===10)return "身分證字號格式不對，請再確認一次";
+    return /^[A-Z0-9]{6,12}$/.test(s)?"":"請填身分證字號，外籍旅客請填護照號碼";
+  }
+  function pad(n){return String(n).padStart(2,"0")}
+  // 接受 1990-05-20、1990/5/20、79/5/20（民國）、19900520
+  function normDate(t){
+    t=t.trim().replace(/\s/g,"");if(!t)return "";
+    var m=t.match(/^(\d{2,4})[\/\-.年](\d{1,2})[\/\-.月](\d{1,2})日?$/)||t.match(/^(19\d{2}|20\d{2})(\d{2})(\d{2})$/)||t.match(/^(\d{2,3})(\d{2})(\d{2})$/);
+    if(!m)return null;
+    var y=+m[1],mo=+m[2],d=+m[3];if(y<1911)y+=1911;
+    if(mo<1||mo>12||d<1||d>31||y>new Date().getFullYear()||y<1900)return null;
+    return y+"-"+pad(mo)+"-"+pad(d);
+  }
+  function filled(p){return p.name||p.id||p.birth||p.phone}
+
+  function render(){
+    var L=$("list");L.textContent="";
+    rows.forEach(function(p,i){
+      var c=el("div","card p"),h=el("h2",null,"第 "+(i+1)+" 位");
+      if(rows.length>need&&i===rows.length-1){var rm=el("button","ghost small","移除");rm.type="button";rm.onclick=function(){rows.pop();render()};h.appendChild(rm)}
+      c.appendChild(h);
+      function field(k,label,attrs){
+        var lb=el("label",null,label),inp=el("input");
+        Object.keys(attrs||{}).forEach(function(a){inp.setAttribute(a,attrs[a])});
+        inp.value=p[k]||"";
+        var er=el("p","err");er.hidden=true;
+        inp.addEventListener("input",function(){p[k]=inp.value;if(k==="id"||k==="birth"){er.hidden=true;inp.removeAttribute("aria-invalid")}});
+        inp.addEventListener("blur",function(){
+          var e="";
+          if(k==="id"){p.id=inp.value.trim().toUpperCase();inp.value=p.id;e=idErr(p.id)}
+          if(k==="birth"&&inp.value.trim()){var d=normDate(inp.value);if(d){p.birth=d;inp.value=d}else e="日期看不懂，請用 1990-05-20 這樣的格式"}
+          er.textContent=e;er.hidden=!e;if(e)inp.setAttribute("aria-invalid","true");
+        });
+        lb.appendChild(inp);lb.appendChild(er);return lb;
+      }
+      c.appendChild(field("name","姓名",{autocomplete:"off"}));
+      var r1=el("div","row");
+      r1.appendChild(field("id","身分證字號／護照號碼",{autocapitalize:"characters",autocomplete:"off"}));
+      r1.appendChild(field("birth","出生年月日",{placeholder:"例：1990-05-20",inputmode:"numeric",autocomplete:"off"}));
+      c.appendChild(r1);
+      c.appendChild(field("phone","手機（小朋友可填家長的）",{inputmode:"tel",autocomplete:"off"}));
+      L.appendChild(c);
+    });
+    var n=rows.filter(filled).length;
+    $("st").textContent="已填 "+n+"／"+need+" 位"+(n<need?"，還沒到的可以之後再補":"");
+  }
+
+  function check(){
+    var bad=[];
+    rows.forEach(function(p,i){
+      if(!filled(p))return;
+      var miss=[];
+      if(!String(p.name||"").trim())miss.push("姓名");
+      if(!String(p.id||"").trim())miss.push("證號");else if(idErr(p.id))miss.push("證號格式");
+      if(!String(p.birth||"").trim())miss.push("出生年月日");else if(!normDate(p.birth))miss.push("出生年月日格式");
+      if(miss.length)bad.push("第 "+(i+1)+" 位："+miss.join("、"));
+    });
+    return bad;
+  }
+
+  $("addBtn").onclick=function(){rows.push({name:"",id:"",birth:"",phone:""});render();var cs=document.querySelectorAll(".p input");if(cs.length)cs[cs.length-4].focus()};
+  $("send").onclick=function(){
+    document.activeElement&&document.activeElement.blur&&document.activeElement.blur();
+    var bad=check(),list=rows.filter(filled);
+    if(!list.length){$("st").textContent="請至少填一位";return}
+    if(bad.length){$("st").textContent="請補齊或修正："+bad.join("；");return}
+    list=list.map(function(p){return {name:p.name.trim(),id:p.id.trim().toUpperCase(),birth:normDate(p.birth),phone:String(p.phone||"").trim()}});
+    $("send").disabled=true;$("st").textContent="送出中…";
+    fetch(API,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({action:"paxSubmit",id:bid,k:key,passengers:list}),redirect:"follow"})
+      .then(function(r){return r.json()}).then(function(res){
+        if(!res||!res.ok){$("st").textContent=res&&res.code==="expired"?"這個連結已過期":"沒有送出，請稍後再試一次";return}
+        $("done").textContent="已收到 "+res.count+" 位旅客資料，謝謝！"+(res.count<need?"還差 "+(need-res.count)+" 位，之後再打開這個連結補上即可。":"需要修改的話，再打開這個連結即可。");
+        $("done").hidden=false;$("st").textContent="已送出";$("done").scrollIntoView({block:"center"});
+      },function(){$("st").textContent="網路不穩，沒有送出，請再試一次"}).then(function(){$("send").disabled=false});
+  };
+
+  if(!bid||!key){stop("連結不完整，請直接從 LINE 訊息裡的連結打開。");return}
+  $("msg").textContent="載入中…";$("msg").hidden=false;
+  fetch(API+"?pax="+encodeURIComponent(bid)+"&k="+encodeURIComponent(key),{cache:"no-store"}).then(function(r){return r.json()}).then(function(res){
+    if(!res||!res.ok){stop(res&&res.code==="expired"?"這個行程已結束，連結已失效。":"連結無效，請直接傳訊息給我們（LINE @FUJI268），謝謝！");return}
+    var b=res.booking;need=b.count||0;
+    $("msg").hidden=true;
+    var S=$("sum");
+    [["日期",b.dateText],["遊程",b.tour||"—"],["人數",need+" 位"],["預約",(b.who||"")+(b.code?"（團號 "+b.code+"）":"")]].forEach(function(x){S.appendChild(el("dt",null,x[0]));S.appendChild(el("dd",null,x[1]))});
+    $("sumCard").hidden=false;
+    rows=(b.passengers||[]).map(function(p){return {name:p.name||"",id:p.id||"",birth:p.birth||"",phone:p.phone||""}});
+    while(rows.length<Math.max(need,1))rows.push({name:"",id:"",birth:"",phone:""});
+    if(b.paxAt){$("done").textContent="您在 "+b.paxAt+" 已填寫過，可以直接修改後再送出。";$("done").hidden=false}
+    $("bar").hidden=false;$("addBtn").hidden=false;render();
+  },function(){stop("連不上伺服器，請稍後再試。")});
+})();
+</script>
+</body>
+</html>
