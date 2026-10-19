@@ -1,0 +1,492 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>最後的蹦火</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="新聞專題｜金山磺港的蹦火仔：電石點火、青鱗仔躍出海面，北台灣曾有近三百艘的漁法，如今只剩個位數船隻守著。">
+<meta property="og:title" content="最後的蹦火｜金山磺港的百年漁火">
+<meta property="og:description" content="電石遇水，火光一蹦，青鱗仔整片躍出海面。走進全台僅存的蹦火仔船隊。">
+<meta property="og:type" content="article">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@600;900&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: one narrow reading column on a night sea; the hero is a live canvas of the fishing ground, the rest of the story sits below it like a log of one night out. Single deliberate dark look: the subject happens after sunset. */
+:root{
+  color-scheme:dark;
+  --night:#0a121c;      /* sea at night, blue-black */
+  --deep:#122234;       /* raised surfaces, water */
+  --line:#24384d;
+  --paper:#ece5d6;      /* warm text, like lamplight on paper */
+  --muted:#93a2b1;
+  --flame:#ffb04a;      /* acetylene flame */
+  --ember:#ff6a1f;
+  --sulfur:#e6d250;     /* 磺：sulfur yellow */
+  --scale:#c9d6e2;      /* fish scale silver */
+  --display:"Noto Serif TC","Songti TC","PMingLiU",serif;
+  --body:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+*,*::before,*::after{box-sizing:inherit}
+html,body{margin:0}
+body{background:var(--night);color:var(--paper);font-family:var(--body);font-size:17px;line-height:1.85;-webkit-font-smoothing:antialiased}
+img{max-width:100%}
+a{color:var(--flame)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--sulfur);outline-offset:3px}
+[hidden]{display:none!important}
+
+.gutter{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.col{max-width:640px;margin:0 auto}
+
+/* ---------- Hero ---------- */
+.hero{position:relative;height:clamp(480px,82vh,760px);overflow:hidden;background:var(--night)}
+.hero canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.hero-text{position:absolute;inset:auto 0 0 0;padding-block:0 32px;
+  background:linear-gradient(to top,var(--night) 8%,color-mix(in srgb,var(--night) 70%,transparent) 55%,transparent)}
+.kicker{font-family:var(--mono);font-size:12px;letter-spacing:.22em;color:var(--sulfur);margin:0 0 10px;text-transform:uppercase}
+h1{font-family:var(--display);font-weight:900;font-size:clamp(44px,11vw,88px);line-height:1.05;margin:0;letter-spacing:.02em;text-wrap:balance}
+h1 .burn{color:var(--flame);text-shadow:0 0 28px color-mix(in srgb,var(--ember) 70%,transparent)}
+.dek{font-size:clamp(17px,2.6vw,20px);color:var(--paper);margin:14px 0 0;max-width:34em;text-wrap:pretty}
+.byline{display:flex;flex-wrap:wrap;gap:6px 16px;align-items:center;margin-top:18px;font-size:13px;color:var(--muted)}
+.ignite{font:inherit;font-weight:700;font-size:14px;color:var(--night);background:var(--flame);border:0;border-radius:999px;padding:8px 16px;cursor:pointer;display:inline-flex;gap:8px;align-items:center}
+.ignite:hover{background:var(--sulfur)}
+.ignite:active{transform:scale(.96)}
+
+/* ---------- Story ---------- */
+main{padding-block:24px 64px}
+.story{display:flex;flex-direction:column;gap:56px}
+section{display:flex;flex-direction:column;gap:16px}
+p{margin:0}
+.lede{font-size:19px;line-height:1.9}
+.lede::first-letter{font-family:var(--display);font-weight:900;font-size:3.2em;float:left;line-height:1;margin:6px 10px 0 0;color:var(--flame)}
+h2{font-family:var(--display);font-weight:900;font-size:clamp(28px,5.4vw,38px);line-height:1.25;margin:0;text-wrap:balance}
+.label{font-family:var(--mono);font-size:12px;letter-spacing:.2em;color:var(--sulfur);text-transform:uppercase;margin:0}
+.term{color:var(--flame);font-weight:700}
+.pull{font-family:var(--display);font-weight:600;font-size:clamp(22px,4.4vw,28px);line-height:1.5;margin:8px 0;padding-left:20px;border-left:3px solid var(--ember);color:var(--paper);text-wrap:balance}
+.note{font-size:13px;color:var(--muted);line-height:1.7}
+
+/* Chemistry figure */
+.figure{background:var(--deep);border:1px solid var(--line);border-radius:6px;padding:20px;display:flex;flex-direction:column;gap:16px}
+.figure svg{width:100%;height:auto;display:block}
+.formula{font-family:var(--mono);font-size:clamp(14px,3.4vw,17px);text-align:center;color:var(--paper);overflow-x:auto;white-space:nowrap;padding-block:4px}
+.formula b{color:var(--flame);font-weight:500}
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;counter-reset:s}
+.steps li{counter-increment:s;font-size:14px;line-height:1.6;color:var(--muted);display:flex;flex-direction:column;gap:4px;min-width:0}
+.steps li::before{content:counter(s);font-family:var(--mono);color:var(--sulfur);font-size:12px}
+.steps strong{color:var(--paper);font-size:15px}
+
+.drip{animation:drip 1.6s cubic-bezier(.5,0,1,.6) infinite}
+@keyframes drip{0%{transform:translateY(0);opacity:0}15%{opacity:1}80%{transform:translateY(46px);opacity:1}100%{transform:translateY(52px);opacity:0}}
+.bubble{animation:rise 2.4s ease-in infinite}
+.bubble:nth-of-type(2){animation-delay:.8s}.bubble:nth-of-type(3){animation-delay:1.6s}
+@keyframes rise{0%{transform:translateY(0);opacity:0}20%{opacity:.9}100%{transform:translateY(-58px);opacity:0}}
+.gas{stroke-dasharray:6 10;animation:flow 1s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-32}}
+.fire{transform-origin:50% 100%;transform-box:fill-box;animation:pong 1.6s ease-out infinite}
+@keyframes pong{0%,62%{transform:scale(.35);opacity:.55}70%{transform:scale(1.25);opacity:1}100%{transform:scale(.9);opacity:.9}}
+.bang{transform-origin:center;transform-box:fill-box;animation:bang 1.6s ease-out infinite}
+@keyframes bang{0%,64%{opacity:0;transform:scale(.6)}72%{opacity:1;transform:scale(1.1)}100%{opacity:0;transform:scale(1.25)}}
+
+/* Crew roles */
+.roles{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.role{background:var(--night);padding:16px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.role h3{margin:0;font-family:var(--display);font-size:20px;font-weight:900;color:var(--flame)}
+.role p{font-size:14px;line-height:1.7;color:var(--muted)}
+
+/* Fleet: 300 boats to a handful */
+.fleet{background:var(--deep);border:1px solid var(--line);border-radius:6px;padding:20px;display:flex;flex-direction:column;gap:16px}
+.fleet-nums{display:flex;flex-wrap:wrap;gap:12px 32px;align-items:flex-end}
+.big{font-family:var(--display);font-weight:900;font-size:clamp(48px,12vw,72px);line-height:1;font-variant-numeric:tabular-nums}
+.big small{font-size:.3em;font-family:var(--body);font-weight:500;color:var(--muted);margin-left:4px}
+.big.then{color:var(--muted)}
+.big.now{color:var(--flame);text-shadow:0 0 20px color-mix(in srgb,var(--ember) 55%,transparent)}
+.fleet-cap{font-size:13px;color:var(--muted)}
+.dots{display:grid;grid-template-columns:repeat(25,1fr);gap:4px}
+.dots i{aspect-ratio:1;border-radius:50%;background:var(--line);transition:background .5s,box-shadow .5s}
+.dots i.lit{background:var(--flame);box-shadow:0 0 8px var(--ember)}
+
+/* One night out: sticky sea strip, boat follows scroll */
+.night{position:relative}
+.strip{position:sticky;top:env(safe-area-inset-top,0px);z-index:2;border-radius:6px;overflow:hidden;border:1px solid var(--line);background:var(--deep)}
+.strip svg{display:block;width:100%;height:auto}
+.clock{position:absolute;top:10px;right:12px;font-family:var(--mono);font-size:13px;color:var(--paper);background:color-mix(in srgb,var(--night) 70%,transparent);padding:2px 8px;border-radius:4px;font-variant-numeric:tabular-nums}
+.log{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:40px;padding-block:28px 8px}
+.log li{display:grid;grid-template-columns:72px 1fr;gap:16px;align-items:start;opacity:.55;transition:opacity .4s}
+.log li.on{opacity:1}
+.log time{font-family:var(--mono);color:var(--sulfur);font-size:14px;padding-top:4px}
+.log h3{margin:0 0 4px;font-family:var(--display);font-size:21px;font-weight:900}
+.log p{font-size:15.5px;color:var(--muted);line-height:1.8}
+.log div{min-width:0}
+
+/* Visit */
+.visit{background:linear-gradient(160deg,color-mix(in srgb,var(--ember) 22%,var(--deep)),var(--deep) 60%);border:1px solid var(--line);border-radius:6px;padding:24px;display:flex;flex-direction:column;gap:14px}
+.visit h2{font-size:clamp(24px,5vw,32px)}
+.tours{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.tours li{display:flex;justify-content:space-between;gap:12px;border-bottom:1px dashed var(--line);padding-bottom:8px;font-size:15px}
+.tours li span:last-child{font-family:var(--mono);color:var(--flame);white-space:nowrap;font-variant-numeric:tabular-nums}
+.cta{align-self:flex-start;text-decoration:none;font-weight:700;color:var(--night);background:var(--flame);padding:12px 20px;border-radius:999px}
+.cta:hover{background:var(--sulfur)}
+.contact{font-size:14px;color:var(--muted);user-select:text}
+.contact b{color:var(--paper);font-family:var(--mono);font-weight:500}
+footer{border-top:1px solid var(--line);padding-block:24px 40px;font-size:13px;color:var(--muted);line-height:1.7}
+
+/* Scroll-driven entrance: computed from scroll position, so anything already in view renders complete. */
+@supports (animation-timeline: view()){
+  .rise{animation:enter linear both;animation-timeline:view();animation-range:entry 0% entry 60%}
+  @keyframes enter{from{transform:translateY(28px);opacity:.6}to{transform:none;opacity:1}}
+}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+</style>
+</head>
+<body>
+
+<header class="hero" aria-label="蹦火仔作業動畫">
+  <canvas id="sea" aria-hidden="true"></canvas>
+  <div class="hero-text gutter">
+    <div class="col">
+      <p class="kicker">專題報導 · 新北金山 · 磺港</p>
+      <h1>最後的<span class="burn">蹦火</span></h1>
+      <p class="dek">電石遇水，火光一蹦，整片青鱗仔躍出海面。北台灣曾有近三百艘船這樣捕魚，如今只剩金山磺港的幾艘船，還在夏夜裡點火。</p>
+      <div class="byline">
+        <span>文／富吉漁創編輯部</span><span>2026 年 10 月</span>
+        <button class="ignite" id="ignite" type="button">點火 <span aria-hidden="true">🔥</span></button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="gutter">
+  <article class="col story">
+
+    <section class="rise">
+      <p class="lede">夜裡八點，金山外海一片漆黑。船頭的火長扭開閥門，把火把伸向管口，「蹦」的一聲，一團橘白色的火光衝上兩三公尺高。幾秒後，海面像沸騰一樣，成千上萬尾青鱗仔朝著光跳出水面，網手揮起大網，一網一網往船裡撈。</p>
+      <p>這是<span class="term">蹦火仔</span>，正式名稱是「磺火捕魚」。台語把點火那一聲爆響叫做「蹦」，漁法因此得名。它靠的是一顆石頭、一桶海水和魚的天性，沒有聲納，也沒有集魚燈。</p>
+    </section>
+
+    <section class="rise" aria-labelledby="h-fire">
+      <p class="label">火從哪裡來</p>
+      <h2 id="h-fire">一顆磺石，一聲蹦</h2>
+      <p>漁民口中的「磺石」，其實是<span class="term">電石</span>（碳化鈣）。把電石裝進密封桶，滴進海水，就會冒出可燃的<span class="term">乙炔</span>。氣體沿著管子送到船頭，火長點燃時，累積的氣體瞬間燃燒，發出蹦的一聲。</p>
+      <figure class="figure" style="margin:0">
+        <svg viewBox="0 0 520 200" role="img" aria-label="示意圖：水滴入電石桶產生乙炔，經管線送到船頭火把點燃">
+          <!-- water tank -->
+          <rect x="20" y="20" width="70" height="40" rx="4" fill="none" stroke="var(--scale)" stroke-width="2"/>
+          <rect x="22" y="36" width="66" height="22" fill="#2f6fa8" opacity=".55"/>
+          <text x="55" y="14" fill="var(--muted)" font-size="12" text-anchor="middle">海水</text>
+          <line x1="55" y1="60" x2="55" y2="78" stroke="var(--scale)" stroke-width="2"/>
+          <circle class="drip" cx="55" cy="84" r="4" fill="#5aa0e0"/>
+          <!-- carbide drum -->
+          <rect x="20" y="96" width="70" height="86" rx="6" fill="var(--night)" stroke="var(--scale)" stroke-width="2"/>
+          <g fill="var(--sulfur)" opacity=".85">
+            <rect x="32" y="156" width="14" height="12" rx="2"/><rect x="50" y="160" width="16" height="10" rx="2"/><rect x="68" y="154" width="12" height="14" rx="2"/>
+            <rect x="40" y="144" width="12" height="11" rx="2"/><rect x="58" y="146" width="14" height="10" rx="2"/>
+          </g>
+          <g fill="none" stroke="var(--scale)" stroke-width="1.5">
+            <circle class="bubble" cx="42" cy="140" r="3"/><circle class="bubble" cx="62" cy="138" r="2.5"/><circle class="bubble" cx="74" cy="142" r="3"/>
+          </g>
+          <text x="55" y="196" fill="var(--muted)" font-size="12" text-anchor="middle">電石桶</text>
+          <!-- pipe -->
+          <path d="M90 110 H330 V80" fill="none" stroke="var(--line)" stroke-width="8" stroke-linecap="round"/>
+          <path class="gas" d="M90 110 H330 V80" fill="none" stroke="var(--sulfur)" stroke-width="3" stroke-linecap="round"/>
+          <text x="210" y="132" fill="var(--muted)" font-size="12" text-anchor="middle">乙炔 C₂H₂ 沿管線送到船頭</text>
+          <!-- torch -->
+          <line x1="330" y1="84" x2="330" y2="70" stroke="var(--scale)" stroke-width="4"/>
+          <path class="fire" d="M330 70 C312 52 318 26 330 6 C342 26 350 52 330 70 Z" fill="var(--flame)"/>
+          <path class="fire" d="M330 68 C322 56 324 40 330 28 C336 40 340 56 330 68 Z" fill="#fff3c4"/>
+          <text class="bang" x="390" y="44" fill="var(--flame)" font-size="30" font-weight="900" font-family="var(--display)">蹦！</text>
+          <!-- sea + fish -->
+          <path d="M250 182 Q290 172 330 182 T410 182 T490 182" fill="none" stroke="#2f6fa8" stroke-width="2"/>
+          <g fill="var(--scale)">
+            <ellipse class="fire" cx="300" cy="160" rx="9" ry="3" transform="rotate(-35 300 160)"/>
+            <ellipse class="fire" cx="360" cy="150" rx="9" ry="3" transform="rotate(30 360 150)"/>
+            <ellipse class="fire" cx="420" cy="166" rx="8" ry="3" transform="rotate(-20 420 166)"/>
+          </g>
+          <text x="455" y="150" fill="var(--muted)" font-size="12" text-anchor="middle">青鱗仔</text>
+        </svg>
+        <p class="formula" aria-label="碳化鈣加兩分子水，生成乙炔與氫氧化鈣">CaC₂ + 2H₂O → <b>C₂H₂↑</b> + Ca(OH)₂</p>
+        <ol class="steps">
+          <li><strong>滴水</strong>海水一滴一滴落進電石桶。</li>
+          <li><strong>產氣</strong>電石遇水冒出乙炔，桶內壓力升高。</li>
+          <li><strong>點火</strong>火長開閥、點火，蹦的一聲火光沖天。</li>
+          <li><strong>躍魚</strong>青鱗仔受光吸引，成群跳出海面。</li>
+        </ol>
+      </figure>
+    </section>
+
+    <section class="rise" aria-labelledby="h-crew">
+      <p class="label">船上的分工</p>
+      <h2 id="h-crew">追魚、點火、撈網</h2>
+      <p>青鱗仔有趨光性。船長在黑暗裡判讀海面找魚群，火長負責控制火光的時機與大小，船舷兩側的網手握著長柄大網，等魚跳起來的那一刻出手。一晚要重複點火許多次，每一次都得三方配合。</p>
+      <div class="roles">
+        <div class="role"><h3>船長</h3><p>看海面的反光與水紋找魚群，把船開到最好的位置。</p></div>
+        <div class="role"><h3>火長</h3><p>站在船頭，開閥點火。火太早魚會散，太晚錯過時機。</p></div>
+        <div class="role"><h3>網手</h3><p>持長柄大網，在魚躍起時從船邊一網撈起。</p></div>
+      </div>
+      <p class="pull">沒有月亮的夜晚最好。海越黑，火光越亮，魚跳得越兇。</p>
+      <p>所以蹦火仔看天吃飯：每年大約五月到九月是漁期，月光太亮、浪太大都出不了海。撈上來的青鱗仔，回港後多半曬成魚乾或加工，以前也是漁村重要的收入。</p>
+    </section>
+
+    <section class="rise" aria-labelledby="h-fleet">
+      <p class="label">從三百艘到個位數</p>
+      <h2 id="h-fleet">一盞一盞熄掉的火</h2>
+      <p>早年漁民用火把誘魚，日治時期引進電石後，磺火漁法在北台灣沿海普及。全盛時期，從基隆到北海岸有近三百艘蹦火船。後來漁船改用集魚燈、漁獲價格下滑、年輕人不再上船，船隊一年比一年少。</p>
+      <div class="fleet" id="fleet">
+        <div class="fleet-nums">
+          <div><div class="big then"><span id="nThen">300</span><small>艘</small></div><div class="fleet-cap">全盛時期（約）</div></div>
+          <div><div class="big now"><span id="nNow">4</span><small>艘</small></div><div class="fleet-cap">現存，全在金山磺港</div></div>
+        </div>
+        <div class="dots" id="dots" role="img" aria-label="三百個點代表全盛時期的蹦火船，其中只有四個仍然亮著"></div>
+        <button class="ignite" id="replay" type="button" style="align-self:flex-start">重播</button>
+      </div>
+      <p>2015 年起，新北市將「磺火捕魚」登錄為無形文化資產（傳統知識與實踐類）。這套漁法的價值，不只在捕到多少魚，也在火長的手感、船員的默契，和整個漁村圍繞著它的生活方式。</p>
+    </section>
+
+    <section class="night rise" aria-labelledby="h-night">
+      <p class="label">跟船一夜</p>
+      <h2 id="h-night">黃昏出港，天亮曬魚</h2>
+      <div class="strip" aria-hidden="true">
+        <svg viewBox="0 0 600 140" id="stripSvg">
+          <defs>
+            <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+              <stop id="skyTop" offset="0" stop-color="#e88a4a"/>
+              <stop id="skyBot" offset="1" stop-color="#3a3f63"/>
+            </linearGradient>
+            <radialGradient id="glow"><stop offset="0" stop-color="#ffb04a" stop-opacity=".9"/><stop offset="1" stop-color="#ffb04a" stop-opacity="0"/></radialGradient>
+          </defs>
+          <rect width="600" height="140" fill="url(#sky)"/>
+          <path d="M0 70 L40 52 L80 60 L120 40 L170 58 L210 66 L0 66 Z" fill="#0e1824" opacity=".85"/>
+          <rect y="88" width="600" height="52" fill="#0d2236"/>
+          <path d="M0 92 Q20 88 40 92 T80 92 T120 92 T160 92 T200 92 T240 92 T280 92 T320 92 T360 92 T400 92 T440 92 T480 92 T520 92 T560 92 T600 92" fill="none" stroke="#2f6fa8" stroke-width="1.5"/>
+          <g id="boat">
+            <circle id="boatGlow" cx="34" cy="62" r="40" fill="url(#glow)" opacity="0"/>
+            <path d="M-18 84 L44 84 L36 96 L-10 96 Z" fill="#05080c"/>
+            <rect x="-2" y="70" width="18" height="14" fill="#05080c"/>
+            <line x1="34" y1="84" x2="34" y2="66" stroke="#05080c" stroke-width="2"/>
+            <path id="boatFire" d="M34 66 C28 58 30 48 34 42 C38 48 40 58 34 66 Z" fill="#ffb04a" opacity="0"/>
+          </g>
+        </svg>
+        <span class="clock" id="clock">17:50</span>
+      </div>
+      <ol class="log" id="log">
+        <li data-t="0"><time>17:50</time><div><h3>出港</h3><p>船員在漁港整理電石、檢查管線與網具，趁天還亮出港，往北海岸外海的漁場開。</p></div></li>
+        <li data-t="1"><time>19:30</time><div><h3>點火</h3><p>天全黑後，船長找到魚群，火長開閥點火。蹦的一聲，海面瞬間被照亮。</p></div></li>
+        <li data-t="2"><time>21:00</time><div><h3>撈捕</h3><p>魚群跟著火光跳躍，網手一網接一網。一晚要點火、移船、再點火，反覆許多回。</p></div></li>
+        <li data-t="3"><time>05:30</time><div><h3>返港曬魚</h3><p>漁獲回港分裝，青鱗仔攤在竹篩上曬成魚乾。漁村的一天，從別人睡醒前開始。</p></div></li>
+      </ol>
+      <p class="note">時間為示意，實際作業依季節、天候與海況調整。</p>
+    </section>
+
+    <section class="rise" aria-labelledby="h-future">
+      <p class="label">火要怎麼傳下去</p>
+      <h2 id="h-future">從漁船到「希望漁火」</h2>
+      <p>為了讓蹦火留下來，磺港的漁民和在地團隊開始讓外地人上岸看、上船看。遊客可以在漁村聽火長講解、親手體驗點火，也能在夏夜搭船出海，近距離看蹦火仔作業。觀光收入讓船能繼續出海，也讓更多人知道，這片海上還有人用百年前的方法點火。</p>
+      <p class="pull">每多一個人看過蹦火，這盞火就多一分理由繼續亮著。</p>
+    </section>
+
+    <aside class="visit rise" aria-labelledby="h-visit">
+      <p class="label">2026 年海上遊程 5/9–9/27</p>
+      <h2 id="h-visit">親眼看一次蹦火</h2>
+      <ul class="tours">
+        <li><span>陸上漁村導覽（全年，約 2.5 小時）</span><span>$650 起</span></li>
+        <li><span>海上蹦火導覽（季節限定，約 4.5 小時）</span><span>$1,800 起</span></li>
+        <li><span>海陸雙響蹦（季節限定，約 6.5 小時）</span><span>$2,300 起</span></li>
+      </ul>
+      <a class="cta" href="https://a24982268-afk.github.io/fuji268/" target="_blank" rel="noopener">看遊程、預約詢問</a>
+      <p class="contact">富吉漁創有限公司　電話 <b>0955-058-522</b>　LINE <b>@FUJI268</b></p>
+    </aside>
+
+  </article>
+</main>
+
+<footer class="gutter">
+  <div class="col">
+    本專題由富吉漁創製作。船隻數量與歷史年代依公開報導整理，僅供參考；遊程價格為全票，以官方預約頁公告為準。
+  </div>
+</footer>
+
+<script>
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- Hero: night sea, fire burst, leaping fish ---------- */
+  const cv = document.getElementById('sea'), cx = cv.getContext('2d');
+  let W = 0, H = 0, dpr = 1, glow = 0, fish = [], stars = [], bangT = 0, t0 = performance.now();
+  function size(){
+    dpr = Math.min(devicePixelRatio || 1, 2);
+    const r = cv.getBoundingClientRect(); W = r.width; H = r.height;
+    cv.width = W * dpr; cv.height = H * dpr; cx.setTransform(dpr,0,0,dpr,0,0);
+    stars = Array.from({length: Math.round(W*H/5000)}, () => ({x: Math.random()*W, y: Math.random()*H*.42, r: Math.random()*1.2+.2, p: Math.random()*6}));
+  }
+  const horizon = () => H * .46;
+  const boatX = () => Math.min(W * .62, W - 120);
+  function burst(){
+    glow = 1; bangT = 1;
+    const sx = boatX(), sy = horizon() + H*.12;
+    const n = W < 500 ? 46 : 80;
+    for (let i = 0; i < n; i++){
+      const side = Math.random() < .5 ? -1 : 1;
+      fish.push({x: sx + side*(30+Math.random()*W*.32), y: sy + Math.random()*H*.18,
+        vx: -side*(Math.random()*1.4+.2), vy: -(Math.random()*7+5)*(H/700), life: 0, s: Math.random()*.6+.7});
+    }
+  }
+  function draw(now){
+    const t = (now - t0)/1000, hz = horizon(), bx = boatX(), by = hz + H*.11;
+    // sky
+    let g = cx.createLinearGradient(0,0,0,hz);
+    g.addColorStop(0,'#05090f'); g.addColorStop(1,'#101e2e');
+    cx.fillStyle = g; cx.fillRect(0,0,W,hz);
+    for (const s of stars){ cx.globalAlpha = (.35+.35*Math.sin(t*1.3+s.p))*(1-glow*.8); cx.fillStyle='#dfe7ef'; cx.beginPath(); cx.arc(s.x,s.y,s.r,0,7); cx.fill(); }
+    cx.globalAlpha = 1;
+    // far coast
+    cx.fillStyle = '#0a1520';
+    cx.beginPath(); cx.moveTo(0,hz);
+    for (let x = 0; x <= W*.45; x += 20) cx.lineTo(x, hz - 18 - 22*Math.sin(x/90) * (1 - x/(W*.45)));
+    cx.lineTo(W*.45,hz); cx.fill();
+    // sea
+    g = cx.createLinearGradient(0,hz,0,H);
+    g.addColorStop(0,'#0f2235'); g.addColorStop(1,'#060c14');
+    cx.fillStyle = g; cx.fillRect(0,hz,W,H-hz);
+    // flame light
+    if (glow > .01){
+      const R = Math.max(W,H)*(.55+glow*.35);
+      const rg = cx.createRadialGradient(bx, by-60, 0, bx, by-60, R);
+      rg.addColorStop(0,`rgba(255,190,90,${.55*glow})`); rg.addColorStop(.35,`rgba(255,110,30,${.22*glow})`); rg.addColorStop(1,'rgba(255,110,30,0)');
+      cx.fillStyle = rg; cx.fillRect(0,0,W,H);
+    }
+    // waves with reflected light
+    for (let k = 0; k < 16; k++){
+      const y = hz + 8 + k*k*(H-hz)/300;
+      cx.strokeStyle = `rgba(${120+130*glow},${150+60*glow},${190-60*glow},${.10+.05*k/16+.35*glow*Math.max(0,1-Math.abs(k-6)/9)})`;
+      cx.lineWidth = 1 + k*.08; cx.beginPath();
+      for (let x = 0; x <= W; x += 12){
+        const yy = y + Math.sin(x/(40+k*6) + t*(1+k*.05) + k)*(1.5+k*.25);
+        x ? cx.lineTo(x,yy) : cx.moveTo(x,yy);
+      }
+      cx.stroke();
+    }
+    // boat (bobbing)
+    const bob = Math.sin(t*1.6)*2.5;
+    cx.save(); cx.translate(bx, by+bob); cx.rotate(Math.sin(t*1.1)*.02);
+    cx.fillStyle = '#020407';
+    cx.beginPath(); cx.moveTo(-90,0); cx.lineTo(70,0); cx.lineTo(56,18); cx.lineTo(-80,18); cx.closePath(); cx.fill();
+    cx.fillRect(-60,-26,40,26); cx.fillRect(-46,-40,12,14);
+    cx.fillRect(-30,-70,3,44);
+    // crew silhouettes
+    for (const px of [-8, 18]){ cx.fillRect(px,-22,8,22); cx.beginPath(); cx.arc(px+4,-27,5,0,7); cx.fill(); }
+    // torch arm
+    cx.strokeStyle = '#020407'; cx.lineWidth = 3; cx.beginPath(); cx.moveTo(52,0); cx.lineTo(70,-34); cx.stroke();
+    // flame
+    const fh = 10 + glow*70 + Math.sin(t*20)*2;
+    const fg = cx.createRadialGradient(70,-34-fh*.3,0,70,-34-fh*.3,fh*.9);
+    fg.addColorStop(0,'rgba(255,248,215,1)'); fg.addColorStop(.35,'rgba(255,176,74,.95)'); fg.addColorStop(1,'rgba(255,90,20,0)');
+    cx.fillStyle = fg; cx.beginPath(); cx.ellipse(70,-34-fh*.4,fh*.35+4,fh*.6+4,0,0,7); cx.fill();
+    cx.restore();
+    // reflection column
+    if (glow > .01){
+      cx.fillStyle = `rgba(255,170,70,${.25*glow})`;
+      for (let i = 0; i < 18; i++){ const yy = by+22+i*((H-by)/18); cx.fillRect(bx+70-14-Math.sin(t*3+i)*10, yy, 28+Math.sin(t*2+i)*14, 2); }
+    }
+    // fish
+    const grav = .32*(H/700);
+    fish = fish.filter(f => f.life < 1 && f.y < H+20);
+    for (const f of fish){
+      f.vy += grav; f.x += f.vx; f.y += f.vy; f.life += .012;
+      if (f.vy > 0 && f.y > by + 40 + Math.random()*40) f.life = 1;
+      cx.save(); cx.translate(f.x,f.y); cx.rotate(Math.atan2(f.vy,f.vx));
+      cx.fillStyle = `rgba(${200+55*glow},${215+20*glow},${230-40*glow},.95)`;
+      cx.beginPath(); cx.ellipse(0,0,9*f.s,2.6*f.s,0,0,7); cx.fill();
+      cx.beginPath(); cx.moveTo(-8*f.s,0); cx.lineTo(-13*f.s,-3.5*f.s); cx.lineTo(-13*f.s,3.5*f.s); cx.fill();
+      cx.restore();
+    }
+    // "蹦！"
+    if (bangT > .01){
+      cx.save(); cx.globalAlpha = Math.min(1,bangT*1.6);
+      cx.font = `900 ${Math.round(34+ (1-bangT)*26)}px "Noto Serif TC", serif`;
+      cx.fillStyle = '#ffb04a'; cx.textAlign = 'center';
+      cx.shadowColor = 'rgba(255,106,31,.9)'; cx.shadowBlur = 24;
+      cx.fillText('蹦！', bx+70, by - 120 - (1-bangT)*40);
+      cx.restore();
+    }
+    glow *= .965; bangT *= .955;
+  }
+  let lastBurst = 0;
+  function loop(now){
+    if (!document.hidden && now - lastBurst > 4200){ burst(); lastBurst = now; }
+    draw(now); requestAnimationFrame(loop);
+  }
+  size(); addEventListener('resize', () => { size(); if (reduce) still(); });
+  function still(){ glow = .75; draw(performance.now()); }
+  document.getElementById('ignite').addEventListener('click', () => {
+    if (reduce){ glow = 1; draw(performance.now()); return; }
+    burst(); lastBurst = performance.now();
+  });
+  if (reduce) still(); else { lastBurst = performance.now() - 3400; requestAnimationFrame(loop); }
+
+  /* ---------- Fleet dots: 300 lit, then going out ---------- */
+  const TOTAL = 300, LEFT = 4;
+  const dots = document.getElementById('dots');
+  const keep = new Set([137, 162, 188, 213]);
+  for (let i = 0; i < TOTAL; i++){ const d = document.createElement('i'); if (keep.has(i)) d.className = 'lit'; dots.appendChild(d); }
+  const nThen = document.getElementById('nThen'), nNow = document.getElementById('nNow');
+  let playing = false;
+  function playFleet(){
+    if (reduce || playing) return; playing = true;
+    const all = [...dots.children]; all.forEach(d => d.classList.add('lit'));
+    const order = all.map((d,i) => i).filter(i => !keep.has(i)).sort(() => Math.random() - .5);
+    const dur = 2600, start = performance.now();
+    nNow.textContent = TOTAL;
+    (function step(now){
+      const p = Math.min(1,(now-start)/dur), e = 1 - Math.pow(1-p,2.2);
+      const off = Math.round(e*order.length);
+      for (let k = 0; k < off; k++) all[order[k]].classList.remove('lit');
+      nNow.textContent = TOTAL - off;
+      if (p < 1) requestAnimationFrame(step); else { nNow.textContent = LEFT; playing = false; }
+    })(start);
+  }
+  document.getElementById('replay').addEventListener('click', playFleet);
+  if (reduce) document.getElementById('replay').hidden = true;
+  new IntersectionObserver((es, ob) => { if (es[0].isIntersecting){ playFleet(); ob.disconnect(); } }, {threshold:.5}).observe(document.getElementById('fleet'));
+
+  /* ---------- One night: boat follows scroll ---------- */
+  const night = document.querySelector('.night'), boat = document.getElementById('boat'),
+        fire = document.getElementById('boatFire'), bglow = document.getElementById('boatGlow'),
+        skyTop = document.getElementById('skyTop'), skyBot = document.getElementById('skyBot'),
+        clock = document.getElementById('clock'), items = [...document.querySelectorAll('#log li')];
+  const lerp = (a,b,p) => a + (b-a)*p;
+  const mix = (c1,c2,p) => '#' + [0,2,4].map(i => Math.round(lerp(parseInt(c1.substr(i,2),16), parseInt(c2.substr(i,2),16), p)).toString(16).padStart(2,'0')).join('');
+  // sky keyframes across the night: dusk, night, night, dawn
+  const SKY = [[0,'e88a4a','3a3f63'],[.28,'0a1220','14243a'],[.75,'05090f','0e1a2a'],[1,'f2b37a','6b86a8']];
+  function sky(p){
+    for (let i = 1; i < SKY.length; i++) if (p <= SKY[i][0]){
+      const [a,ta,ba] = SKY[i-1], [b,tb,bb] = SKY[i], q = (p-a)/(b-a);
+      return [mix(ta,tb,q), mix(ba,bb,q)];
+    }
+    return [SKY[3][1], SKY[3][2]];
+  }
+  const MINS = [17*60+50, 19*60+30, 21*60, 29*60+30];
+  function onScroll(){
+    const r = night.getBoundingClientRect(), vh = innerHeight;
+    const p = Math.max(0, Math.min(1, (vh*.55 - r.top) / (r.height - vh*.2)));
+    const [st, sb] = sky(p); skyTop.setAttribute('stop-color', st); skyBot.setAttribute('stop-color', sb);
+    const x = p < .5 ? lerp(70, 420, p/.5) : (p < .85 ? 420 : lerp(420, 60, (p-.85)/.15));
+    const lit = p > .22 && p < .82;
+    const flick = lit ? .75 + .25*Math.sin(performance.now()/90) : 0;
+    boat.setAttribute('transform', `translate(${x.toFixed(1)} 0)${p > .85 ? ' scale(-1 1) translate(-40 0)' : ''}`);
+    fire.setAttribute('opacity', flick); bglow.setAttribute('opacity', lit ? .9 : 0);
+    const seg = Math.min(2, Math.floor(p*3)), q = p*3 - seg;
+    let m = Math.round(lerp(MINS[seg], MINS[seg+1], q)) % (24*60);
+    clock.textContent = String(Math.floor(m/60)).padStart(2,'0') + ':' + String(m%60).padStart(2,'0');
+    const active = Math.min(items.length-1, Math.floor(p*items.length*0.999 + .15));
+    items.forEach((li,i) => li.classList.toggle('on', i <= active));
+  }
+  addEventListener('scroll', onScroll, {passive:true}); addEventListener('resize', onScroll);
+  onScroll();
+  if (!reduce) setInterval(() => { const r = night.getBoundingClientRect(); if (r.top < innerHeight && r.bottom > 0) onScroll(); }, 120);
+})();
+</script>
+</body>
+</html>
